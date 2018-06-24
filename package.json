@@ -1,0 +1,16 @@
+{
+  "name": "fs_w3r2",
+  "version": "1.0.0",
+  "description": "Interface to FundSplitter Smart Contracts using Restful API with Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chim Himidumage",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "web3js-raw": "0.0.2-beta.8"
+  }
+}
