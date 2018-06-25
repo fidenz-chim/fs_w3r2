@@ -15,8 +15,7 @@ app.get('/fund_splitter', function(request, response) {
 });
 
 app.get('/', function(request, response) {
-    // response.sendfile('index.html');
-    response.sendfile(htmlDir + 'fund_splitter.html');    
+    response.sendfile(htmlDir + 'fund_splitter.html');
 });
 
 module.exports = app;
