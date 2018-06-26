@@ -5,20 +5,19 @@
 version: 2
 jobs:
    # The build job
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:7.10
+   build:
+       docker:
+          # specify the version you desire here
+          - image: circleci/node:7.10
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+          # Specify service dependencies here if necessary
+          # CircleCI maintains a library of pre-built images
+          # documented at https://circleci.com/docs/2.0/circleci-images/
+          # - image: circleci/mongo:3.4.4
 
-    working_directory: ~/repo
-
-    steps:
-      - checkout
+          working_directory: ~/repo
+        steps:
+        - checkout
 
       # Download and cache dependencies
       - restore_cache:
@@ -36,15 +35,14 @@ jobs:
 
       # run tests!
       - run: npm test
+
   deploy:
-    machine:
-      enabled: true
     working_directory: ~/repo
-      steps:
+    steps:
         - checkout
         - run:
           name: Deploy Master to Heroku
-         command: git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git master
+          command: git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git master
 
   #  # The deploy job
   # deploy:
