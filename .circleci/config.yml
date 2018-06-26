@@ -4,6 +4,7 @@
 #
 version: 2
 jobs:
+   # The build job
   build:
     docker:
       # specify the version you desire here
@@ -35,7 +36,22 @@ jobs:
 
       # run tests!
       - run: npm test
-      - run:
-          name: Deploy Master to Heroku
-          command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
+   # The deploy job
+    deploy:
+        working_directory: ~/repo
+        docker:
+            - image: circleci/node:6.10-browsers
+        steps:
+            # Log the current branch
+            - run:
+                name: Show current branch
+                command: echo ${CIRCLE_BRANCH}
+            # Restore cache from the build job which contains the
+            # dist folder that needs to be deployed
+            - restore_cache:
+                key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+            # Install AWS cli
+            - run:
+                name: Deploy to Heroku
+                command: git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git master
