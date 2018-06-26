@@ -3,7 +3,7 @@ document.getElementById('newMemberAddress').value = "0x0012582598A86C2B807eF1198
 document.getElementById('listIndex').value = "2";
 
 function getMemberCount() {
-    var url = "http://localhost:3000/contract/count";
+    var url = "/contract/count";
 
 
     var xhr = new XMLHttpRequest();
@@ -27,7 +27,7 @@ function getMemberCount() {
 
 function getMemberAt() {
     var listIndex = document.getElementById('listIndex').value;
-    var url = "http://localhost:3000/contract/at/" + listIndex;
+    var url = "/contract/at/" + listIndex;
     console.log(url);
 
     var xhr = new XMLHttpRequest();
@@ -49,7 +49,7 @@ function getMemberAt() {
     xhr.send(null);
 }
 function onAddMember() {
-    var url = "http://localhost:3000/contract/create";
+    var url = "/contract/create";
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
