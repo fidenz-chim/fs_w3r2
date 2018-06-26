@@ -36,7 +36,7 @@ jobs:
       # run tests!
       - run: npm test
 
-      - deployment:
+      deployment:
           staging:
             branch: master
             heroku:
