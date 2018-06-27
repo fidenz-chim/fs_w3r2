@@ -1,5 +1,5 @@
 # Javascript Node CircleCI 2.0 configuration file
-#
+# YAML Passer - https://yaml-online-parser.appspot.com/
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
@@ -13,8 +13,8 @@ jobs:
         - checkout
         - restore_cache:
             keys:
-                v1-dependencies-{{ checksum "package.json" }}
-                v1-dependencies-
+                - v1-dependencies-{{ checksum "package.json" }}
+                - v1-dependencies-
         - run: npm install
         - save_cache:
               paths:
