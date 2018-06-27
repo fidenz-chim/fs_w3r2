@@ -14,15 +14,14 @@ jobs:
 
     # Download and cache dependencies
         - restore_cache:
-          keys:
-            v1_dependencies_{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            v1_dependencies_
+            keys:
+                v1_dependencies_{{ checksum "package.json" }}
+                v1_dependencies_
         - run: npm install
         - save_cache:
-            paths:
-                node_modules
-            key: v1-dependencies-{{ checksum "package.json" }}
+              paths:
+                  node_modules
+              key: v1-dependencies-{{ checksum "package.json" }}
         # run tests!
         - run: npm test
 
