@@ -5,7 +5,7 @@
 version: 2
 jobs:
    # The build job
-  build:
+  build_prod:
     docker:
       - image: circleci/node:7.10
     working_directory: ~/repo
@@ -36,10 +36,10 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build
+      - build_prod
       - deploy_prod:
           requires:
-            - build
+            - build_prod
           filters:
             branches:
               only: master
