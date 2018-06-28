@@ -2,10 +2,30 @@
 document.getElementById('newMemberAddress').value = "0x0012582598A86C2B807eF119838B6f09eE15c4cB";
 document.getElementById('listIndex').value = "2";
 
+function getVersionInfo() {
+    var url = "/info";
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onload = function (e) {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+            document.title = xhr.responseText;
+          console.log(xhr.responseText);
+        } else {
+          console.error(xhr.statusText);
+        }
+        addRowToConsole(xhr.responseText);
+      }
+    };
+    xhr.onerror = function (e) {
+      console.error(xhr.statusText);
+    };
+    xhr.send(null);
+}
+
 function getMemberCount() {
     var url = "/contract/count";
-
-
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/json");

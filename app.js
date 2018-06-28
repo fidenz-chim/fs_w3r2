@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var git = require('git-rev');
 
 var htmlDir = './html/';
 
@@ -16,6 +17,17 @@ app.get('/fund_splitter', function(request, response) {
 
 app.get('/', function(request, response) {
     response.sendfile(htmlDir + 'fund_splitter.html');
+});
+
+app.get('/info', async function (req, res) {
+    var info = "";
+    git.branch(function(br){
+        git.short(function(sh){
+            info = br+"-"+sh;
+            res.status(200).send(info);
+
+        });
+    });
 });
 
 module.exports = app;
