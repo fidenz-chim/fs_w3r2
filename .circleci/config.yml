@@ -22,6 +22,23 @@ jobs:
               key: v1-dependencies-{{ checksum "package.json" }}
         - run: npm test
 
+  build_dev:
+    docker:
+      - image: circleci/node:7.10
+    working_directory: ~/repo
+    steps:
+        - checkout
+        - restore_cache:
+            keys:
+                - v1-dependencies-{{ checksum "package.json" }}
+                - v1-dependencies-
+        - run: npm install
+        - save_cache:
+              paths:
+                  node_modules
+              key: v1-dependencies-{{ checksum "package.json" }}
+        - run: npm test
+
   deploy_prod:
     working_directory: ~/repo
     docker:
@@ -30,7 +47,33 @@ jobs:
         - checkout
         - run:
             name: Deploy Master to Heroku
-            command: git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git master
+            command: |
+                if [ $CIRCLE_BRANCH = 'master' ]; then
+                    git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git master
+                fi
+                if [ $CIRCLE_BRANCH = 'dev' ]; then
+                    git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME_DEV}.git master
+                fi
+  # deploy_prod:
+  #   working_directory: ~/repo
+  #   docker:
+  #       - image: circleci/node:7.10
+  #   steps:
+  #       - checkout
+  #       - run:
+  #           name: Deploy Master to Heroku
+  #           command: git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git master
+
+  deploy_dev:
+    working_directory: ~/repo
+    docker:
+        - image: circleci/node:7.10
+    steps:
+        - checkout
+        - run:
+            name: Deploy Master to Heroku
+            command: git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME_DEV}.git master
+
 
 workflows:
   version: 2
@@ -40,6 +83,3 @@ workflows:
       - deploy_prod:
           requires:
             - build_prod
-          filters:
-            branches:
-              only: master
